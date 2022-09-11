@@ -68,7 +68,6 @@ public class Main {
         BigDecimal disp2 = sumForDispersion2.divide(BigDecimal.valueOf(selection));
         System.out.println("Выборочная дисперсия по " + selection + " значениям: " + disp2);
 
-
         // Частотная таблица
         System.out.printf("%-10s%-10s%-10s%n", "Интервал", "Кол-во СВ"
                 , "Относительная частота попадания");
@@ -88,6 +87,28 @@ public class Main {
             System.out.printf("%-10s", sumForFrequency);
             System.out.printf("%-10s%n", BigDecimal.valueOf(sumForFrequency).divide(BigDecimal.valueOf(1000)).setScale(2, RoundingMode.DOWN));
         }
+
+        // Гистограмма
+        System.out.printf("%-10s%-100s%n", "Интервал", "Частота");
+        BigDecimal baseInterval2 = BigDecimal.valueOf(1)
+                .divide(BigDecimal.valueOf(20)).setScale(2);
+        for (int i = 0; i < 20; i++) {
+            BigDecimal interval = (BigDecimal.valueOf(i).add(BigDecimal.valueOf(1)))
+                    .divide(BigDecimal.valueOf(20)).setScale(2);
+            System.out.printf("%-10s", interval);
+            int sumForFrequency = 0;
+            for (int j = 0; j < 1000; j++) {
+                if ((sequenceForMx[j].compareTo(interval) < 0) &&
+                        (sequenceForMx[j].compareTo(interval.subtract(baseInterval2)) > 0)) {
+                    sumForFrequency++;
+                }
+            }
+            for (int j = 0; j < sumForFrequency; j++) {
+                System.out.print("*");
+            }
+            System.out.println("");
+        }
+
     }
 
     // ЛР №1
