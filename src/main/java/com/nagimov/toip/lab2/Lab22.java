@@ -90,27 +90,26 @@ public class Lab22 {
         }
 
         // 3 часть ЛР
-        double[] raw2 = {0, 0.25, 0.5};
-        int[] sequenceX2 = {2, 4, 6};
+        double[] raw2 = {0, 0, 0.0625, 0.125, 0.1875, 0.25, 0.1875, 0.125, 0.0625, 0, 0.125, 0.25, 0.375, 0.5, 0, 0, 0,  0, 0, 0, 0, 0};
+        double[] sequenceX2 = {0, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10};
 
         // Заполняем мапу ключами "Интервал" и значениями "Кол-во повторений" (3 часть)
         Map<Double, Integer> intervalCounterMap2 = new HashMap<>();
         List<Double> listForMx = new ArrayList<>();
         for (int i = 1; i < raw2.length; i++) {
-            intervalCounterMap2.put(raw2[i], 0);
+            intervalCounterMap2.put(sequenceX2[i], 0);
         }
         for (int i = 0; i < 100; i++) {
             for (int j = 1; j < raw2.length; j++) {
-                if(sequenceOfRandomDecimals[i].doubleValue() > raw2[j-1]
-                        && sequenceOfRandomDecimals[i].doubleValue() <= raw2[j]) {
-                    int counter = intervalCounterMap2.get(raw2[j]);
-                    intervalCounterMap2.put(raw2[j], ++counter);
+                if(sequenceOfRandomDecimals[i].doubleValue() <= raw2[j]) {
+                    int counter = intervalCounterMap2.get(sequenceX2[j]);
+                    intervalCounterMap2.put(sequenceX2[j], ++counter);
                     listForMx.add(sequenceOfRandomDecimals[i].doubleValue());
                 }
             }
         }
 
-        // Мат.ожидание
+        // Мат.ожидание (3 часть)
         double sum = 0;
         for (Double value :
                 listForMx) {
@@ -118,20 +117,19 @@ public class Lab22 {
         }
         double mx2 = sum / listForMx.size();
 
-        // Дисперсия
-
+        // Дисперсия (3 часть)
 
         // Частотная таблица (3 часть)
         System.out.println("----------------------");
         System.out.println("3 часть ЛР");
         System.out.println("----------------------");
-        System.out.println("Математическое ожидание 2 часть: " + mx2);
+        System.out.println("Математическое ожидание 3 часть: " + mx2);
 
         System.out.printf("%-10s%-10s%-10s%n", "Интервал", "Кол-во СВ", "Относительная частота попадания");
         for (int i = 1; i < raw2.length; i++) {
-            System.out.printf("%-10s", raw2[i]);
-            System.out.printf("%-10s", intervalCounterMap2.get(raw2[i]));
-            double raw2Value = (double) intervalCounterMap2.get(raw2[i]);
+            System.out.printf("%-10s", sequenceX2[i]);
+            System.out.printf("%-10s", intervalCounterMap2.get(sequenceX2[i]));
+            double raw2Value = (double) intervalCounterMap2.get(sequenceX2[i]);
             double freq = raw2Value/ 100;
             System.out.printf("%-10s%n", freq);
         }
@@ -139,8 +137,8 @@ public class Lab22 {
         // Гистограмма (3 часть)
         System.out.printf("%-10s%-100s%n", "Интервал", "Частота");
         for (int i = 1; i < raw2.length; i++) {
-            System.out.printf("%-10s", raw2[i]);
-            for (int j = 1; j < intervalCounterMap2.get(raw2[i]); j++) {
+            System.out.printf("%-10s", sequenceX2[i]);
+            for (int j = 1; j < intervalCounterMap2.get(sequenceX2[i]); j++) {
                 System.out.print("*");
             }
             System.out.println("");
@@ -154,7 +152,7 @@ public class Lab22 {
             dispersion = dispersion + d;
         }
         dispersion = dispersion - Math.pow(mx, 2);
-        System.out.println("Дисперсия дискретной случайной величины: " + dispersion);
+        System.out.println("Дисперсия (2 часть): " + dispersion);
     }
 
     private double getMx(int[] sequenceX, double[] sequenceP) {
@@ -163,7 +161,7 @@ public class Lab22 {
             double m = sequenceX[i] * sequenceP[i];
             mx = mx + m;
         }
-        System.out.println("Математическое ожидание дискретной случайной величины: " + mx);
+        System.out.println("Математическое ожидание (2 часть): " + mx);
         return mx;
     }
 }
